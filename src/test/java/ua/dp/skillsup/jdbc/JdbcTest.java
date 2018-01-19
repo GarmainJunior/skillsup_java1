@@ -4,10 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class JdbcTest {
 
@@ -41,10 +38,33 @@ public class JdbcTest {
         statement.execute("INSERT INTO user(USERNAME, PASSWORD, EMAIL) VALUES\n" +
                 "  ('admin','$2a$08$DobXCJtm7dQwfNz3J0ZILevNNXVslyrY2j0J2dKOBG56uPpBooVoy',\n" +
                 "   'helen.moore@gmail.com');");
+        statement.execute("INSERT INTO user (USERNAME, PASSWORD, EMAIL) VALUES\n" +
+        "('piter', 'root', 'xbox')");
+
         statement.close();
+
         ResultSet resultSet = conn.prepareStatement("select * from user").executeQuery();
+        meth(resultSet);
+        Statement executeStatement = conn.createStatement();
+
+//executeStatement
+//        ("CREATE TABLE POST\n" +
+//                        "(\n" +
+//                        "ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
+//                "AVTHOR VARCHAR (60)NOT NULL UNIQUE,\n" +
+//                "TITLE VARCHAR (60) NOT NULL, \n " +
+//                "CONTENT VARCHAR(max) NOT NULL, \n" +
+//                ");");
+//
+
+
+
+    }
+
+    private void meth(ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
-            System.out.println(resultSet.getObject(2));
-        }
+            System.out.println(resultSet.getObject(2)  + " | " + resultSet.getString(3));
+            }
+
     }
 }

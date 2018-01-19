@@ -13,6 +13,7 @@ public class MetaProg {
         User user = new User();
         user.setName("John Doe");
         user.setAmount(200);
+        Executor.execute("ua.dp.skillsup.reflection");
 
         System.out.println("Methods:");
         Class clazz = user.getClass();

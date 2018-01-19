@@ -1,7 +1,6 @@
 package ua.dp.skillsup.tdd;
 
 import org.springframework.beans.factory.InitializingBean;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class FeeService implements InitializingBean{
 
