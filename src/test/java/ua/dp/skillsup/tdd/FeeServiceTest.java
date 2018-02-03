@@ -38,6 +38,18 @@ public class FeeServiceTest extends Assert {
     }
 
 
+    @Test
+
+    public void weekendDays(){
+        Mockito.when(holidayService.isHoliday(new Date())).thenReturn(false);
+        Mockito.when(weekendService.weekendS()).thenReturn(true);
+        accountService.transferMoney(sender,recipient,100);
+        assertEquals(0,sender.getAmount(),01);
+        assertEquals(298.5,recipient.getAmount(),01);
+
+    }
+
+
 
 
 }
