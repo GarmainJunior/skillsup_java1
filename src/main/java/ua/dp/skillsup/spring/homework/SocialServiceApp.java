@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.dp.skillsup.spring.homework.service.FacebookApi;
+import ua.dp.skillsup.spring.homework.service.InstagramApi;
 import ua.dp.skillsup.spring.homework.service.ServiceApi;
 
 import java.util.ArrayList;
@@ -26,8 +27,19 @@ public class SocialServiceApp {
     }
 
 
+    @Bean
+    @Autowired
+    public PostProvider instagramPostProvider(@Value("${keyWord}")String keyWord,
+                                              InstagramApi instagramApi, PostFilter postFilter)
+    {
+        PostProvider postProvider = PostProviderInit(keyWord, instagramApi, postFilter);
+        return postProvider;
+    }
 
-    public static void main(String[] args) {
+
+
+
+        public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("SocialServiceApp.xml");
         SocialServiceApp socialServiceApp = (SocialServiceApp) context.getBean("socialServiceApp");
         socialServiceApp.run();
