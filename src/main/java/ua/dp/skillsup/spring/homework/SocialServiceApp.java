@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.dp.skillsup.spring.homework.service.FacebookApi;
 import ua.dp.skillsup.spring.homework.service.InstagramApi;
 import ua.dp.skillsup.spring.homework.service.ServiceApi;
+import ua.dp.skillsup.spring.homework.service.TwitterApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,15 @@ public class SocialServiceApp {
                                               InstagramApi instagramApi, PostFilter postFilter)
     {
         PostProvider postProvider = PostProviderInit(keyWord, instagramApi, postFilter);
+        return postProvider;
+    }
+
+    @Bean
+    @Autowired
+    public PostProvider twitterPostProvider(@Value("${keyWord}")String keyWord,
+                                            TwitterApi twitterApi, PostFilter postFilter)
+    {
+        PostProvider postProvider = PostProviderInit(keyWord, twitterApi, postFilter);
         return postProvider;
     }
 
