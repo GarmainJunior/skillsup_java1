@@ -1,15 +1,49 @@
 package ua.dp.skillsup.spring.homework;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ua.dp.skillsup.spring.homework.service.FacebookApi;
+import ua.dp.skillsup.spring.homework.service.ServiceApi;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Configuration
 public class SocialServiceApp {
+    @Autowired
     List<PostProvider> providers;
 
-    public static void main(String[] args) {
-        //todo instantiate App with spring
-        new SocialServiceApp().run();
+    @Bean
+    @Autowired
+    public PostProvider facebookPostProvider(@Value("${keyWord}") String keyWord ,
+                                             FacebookApi facebookApi , PostFilter postFilter)
+    {
+        PostProvider postProvider = PostProviderInit(keyWord, facebookApi, postFilter);
+        return postProvider;
     }
+
+
+
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("SocialServiceApp.xml");
+        SocialServiceApp socialServiceApp = (SocialServiceApp) context.getBean("socialServiceApp");
+        socialServiceApp.run();
+
+
+    }
+
+     PostProvider PostProviderInit(String keyWord , ServiceApi serviceApi , PostFilter postFilter)
+    {
+        PostProvider postProvider = new PostProvider();
+        postProvider.setServiceApi(serviceApi);
+        postProvider.setPostFilter(postFilter);
+        postProvider.setKeyWord(keyWord);
+        return postProvider;
+    }
+
 
     public void run(){
         List<Post> posts = new ArrayList<>();
@@ -21,4 +55,5 @@ public class SocialServiceApp {
             System.out.println(post);
         }
     }
+
 }
